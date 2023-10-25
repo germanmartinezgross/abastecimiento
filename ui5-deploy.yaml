@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "2.5"
+metadata:
+  name: andina.abastecimiento
+type: application
+builder:
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+  customTasks:
+    - name: deploy-to-abap
+      afterTask: generateCachebusterInfo
+      configuration:
+        target:
+          url: http://chpaingwdb1.koandina.ccf:8000/
+        app:
+          name: ABAST_LINEA
+          description: Abastecimiento de Linea
+          package: SMQ243DBFABAP
+          transport: DBFK901366

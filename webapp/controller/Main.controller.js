@@ -13,6 +13,14 @@ sap.ui.define([
             onInit: async function () {
                 let oData = await this.lecturaOrigenDestino();
                 this.getOwnerComponent().setModel(new JSONModel(oData), "origenDestino");
+                //Tools Model
+                let oToolsModel = new sap.ui.model.json.JSONModel();
+
+                oToolsModel.setData({
+                   sOrigen: "",
+                   sDestino:"",
+                });
+                this.getOwnerComponent().setModel(oToolsModel, "ToolsModel");
             },
 
             onQRScan: async function (oEvent) {
@@ -38,6 +46,66 @@ sap.ui.define([
                             //	);
                         }
                 );
+            },
+
+            onConfirmar: async function(oEvent){
+                var oModel = new JSONModel;
+                var origen = this.getOwnerComponent().getModel("ToolsModel").getData().sOrigen
+                var destino = this.getOwnerComponent().getModel("ToolsModel").getData().sDestino
+                var array = this.getOwnerComponent().getModel("origenDestino").getData().results
+                let arrayOrigen = array.filter(function (el) {
+                    return el.denominacion === origen
+                });
+                let arrayDestino = array.filter(function (el) {
+                    return el.denominacion === destino
+                });
+
+
+                oModel.setData(
+                {
+                    "matnr": this.byId("matnr").getText(),
+                    "werksOrigen":arrayOrigen[0].werks,
+                    "lgortOrigen":arrayOrigen[0].lgort,
+                    "werksDestino":arrayDestino[0].werks,
+                    "lgortDestino":arrayDestino[0].lgort,
+                    "oP":this.byId("op").getValue(),
+                    "idQR":this.byId("rotulo").getValue(),
+                 }
+                )
+
+                let oData = await this._setData(oModel.getData())
+                sap.m.MessageToast.show(oData.return);
+
+            },
+
+            _setData: async function(oModel){
+                try {
+                    var modelo = this.getOwnerComponent().getModel("abastecimiento")
+                    modelo.setUseBatch(false);
+                    return new Promise((res, rej) => {
+                        modelo.create(`/setMovementSet`, oModel, {
+                            success: res,
+                            error: rej
+                        });
+                    });
+                } catch (error) {
+                    if (error.responseText !== undefined) {
+
+                        var err = JSON.parse(err.responseText).error.message.value;
+                        sap.m.MessageBox.error(err);
+                    } else {
+
+                        sap.m.MessageToast.show("Error al consultar oData");
+                    }
+                }
+                if (error.responseText !== undefined) {
+
+                    var err = JSON.parse(err.responseText).error.message.value;
+                    sap.m.MessageBox.error(err);
+                } else {
+
+                    sap.m.MessageToast.show("Error al consultar oData");
+                }
             },
 
             lecturaQR: async function (id) {

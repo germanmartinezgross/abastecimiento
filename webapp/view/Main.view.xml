@@ -26,9 +26,9 @@
                 <FlexBox class="princ" height="4rem" justifyContent="Center" alignItems="Center">
                     <items>
                         <Label labelFor="origen"></Label>
-                        <ComboBox id ="origen" placeholder="Origen"
+                        <ComboBox selectedKey="{ToolsModel>/sOrigen}" id ="origen" placeholder="Origen"
 				                  items="{ path: 'origenDestino>/results' }">
-				            <core:Item key="{origenDestino>lgort}" text="{origenDestino>denominacion}" />
+				            <core:Item key="{origenDestino>denominacion}" text="{origenDestino>denominacion}" />
 			            </ComboBox>
                     </items>
                 </FlexBox>
@@ -36,9 +36,9 @@
                 <FlexBox class="princ" height="4rem" justifyContent="Center" alignItems="Center">
                     <items>
                         <Label labelFor="destino"></Label>
-                        <ComboBox id ="destino" placeholder="Destino"
+                        <ComboBox  selectedKey="{ToolsModel>/sDestino}" id ="destino" placeholder="Destino"
 				                  items="{ path: 'origenDestino>/results' }">
-				            <core:Item key="{origenDestino>lgort}" text="{origenDestino>denominacion}" />
+				            <core:Item key="{origenDestino>denominacion}" text="{origenDestino>denominacion}" />
 			            </ComboBox>
                     </items>
                 </FlexBox>
@@ -54,7 +54,7 @@
                     <items>
                         <!-- <Button class="sapUiSmallMarginEnd" text="Cancelar" icon="sap-icon://cancel" press="onQRScan"
                             type="Emphasized"></Button> -->
-                        <Button class="sapUiSmallMarginEnd" text="Confirmar" icon="sap-icon://accept" press="onQRScan"
+                        <Button class="sapUiSmallMarginEnd" text="Confirmar" icon="sap-icon://accept" press="onConfirmar"
                             type="Emphasized"></Button>
 
                     </items>

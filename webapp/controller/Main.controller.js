@@ -59,15 +59,24 @@ sap.ui.define([
                 let arrayDestino = array.filter(function (el) {
                     return el.denominacion === destino
                 });
-
-
+                var werksOrigen = "", lgortOrigen = "";
+                if (arrayOrigen[0] != undefined) {
+                    werksOrigen = arrayOrigen[0].werks;
+                    lgortOrigen = arrayOrigen[0].lgort;
+                }
+                var werksDestino = "", lgortDestino = "";
+                if (arrayDestino[0] != undefined) {
+                    werksDestino = arrayDestino[0].werks;
+                    lgortDestino = arrayDestino[0].lgort;
+                }
                 oModel.setData(
-                {
+                {   
+                    "paso": "1",
                     "matnr": this.byId("matnr").getText(),
-                    "werksOrigen":arrayOrigen[0].werks,
-                    "lgortOrigen":arrayOrigen[0].lgort,
-                    "werksDestino":arrayDestino[0].werks,
-                    "lgortDestino":arrayDestino[0].lgort,
+                    "werksOrigen":werksOrigen,
+                    "lgortOrigen":lgortOrigen,
+                    "werksDestino":werksDestino,
+                    "lgortDestino":lgortDestino,
                     "oP":this.byId("op").getValue(),
                     "idQR":this.byId("rotulo").getValue(),
                  }
